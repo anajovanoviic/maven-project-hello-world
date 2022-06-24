@@ -1,0 +1,18 @@
+7.a. Which command should you use to build all of the projects using one command in such a way that it is stored in .m2?
+
+	 mvn clean install -T4
+
+7.b. Which command should you use if you only want to execute tests?
+
+	mvn compiler:testCompile
+	mvn clean test
+
+7.c. Where is the jar file stored?
+
+	C:\Users\anadjj\.m2\repository\com\ana\child-project-1\1.0-SNAPSHOT\child-project-1-1.0-SNAPSHOT.jar
+
+9.a. How are the jars called after re-building the project with new version?
+
+	child-project-1-2.0.0-SNAPSHOT.jar
+	child-project-2-2.0.0-SNAPSHOT.jar
+
