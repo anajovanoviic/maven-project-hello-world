@@ -20,5 +20,25 @@ pipeline {
                 sh "mvn package"
             }
         }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                  sh 'docker build -t anajovanovic98/my-app-1.0 .'
+                }
+            }
+        }
+        
+        stage('Push docker image') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'password', usernameVariable: 'username')]) {
+                    sh 'docker login -u $username -p $password'
+
+                    sh 'docker push $username/my-app-1.0'
+                        
+                    }                 
+                }
+            }
+        }
     }
 }
