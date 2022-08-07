@@ -41,11 +41,22 @@ pipeline {
             }
         }
         
-         stage('Call job that will execute ansible playbook') {
+          stage('Ansible playbook') {
             steps {
-                script {
-                  build job: 'ansibleProba'
-                }
+                //ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible2', inventory: 'dev.inv', playbook: 'apache3.yml'
+                //sh "ansible-playbook ping.yml"
+                withCredentials([sshUserPrivateKey(credentialsId: 'private-key', keyFileVariable: 'azure')]) {
+                 //sh "which ansible"
+                 sh "pwd &&  ansible --version"
+                 sh 'which ansible'
+                 //sh "ansible-playbook -i /etc/ansible/hosts /home/adminuser/ping.yaml -e 'ansible_ssh_private_key_file=~/.ssh/azure ansible_user=adminuser' "
+                 //sh "ansible-playbook -i /etc/ansible/hosts /home/adminuser/ping.yaml -e 'ansible_ssh_private_key_file=$azure ansible_user=adminuser' "
+                 sh "export ANSIBLE_HOST_KEY_CHECKING=False && ansible-playbook -i /etc/ansible/hosts /home/adminuser/ping.yaml -e 'ansible_ssh_private_key_file=$azure ansible_user=adminuser ansible_sudo_pass=francuski1' " 
+
+                 //sh "export ANSIBLE_HOST_KEY_CHECKING=False && ansible-playbook -i inventory/dev ping.yml -e 'ansible_ssh_private_key_file=/home/adminuser/.ssh/azure ansible_user=adminuser ansible_sudo_pass=francuski1' " 
+}
+                
+
             }
         }
     }
