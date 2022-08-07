@@ -40,5 +40,13 @@ pipeline {
                 }
             }
         }
+        
+         stage('Call job that will execute ansible playbook') {
+            steps {
+                script {
+                  build job: 'ansibleProba'
+                }
+            }
+        }
     }
 }
